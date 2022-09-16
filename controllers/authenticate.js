@@ -45,43 +45,39 @@ exports.register = catchAsync(async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
-  try {
-    const findUsernameInDB = await UserModel.findOne({ username });
-    if (!findUsernameInDB) {
-      return res
-        .status(400)
-        .json({ success: false, message: "You didn't create an account yet!" });
-    }
-
-    const validatePassword = await argon2.verify(
-      findUsernameInDB.password,
-      password
-    );
-    if (!validatePassword) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Incorrect password!" });
-    }
-    // console.log(findUsernameInDB);
-    const accessToken = jwt.sign(
-      { userId: findUsernameInDB._id },
-      process.env.JWT_SECRET
-    ); //._id được tạo sẵn trong mongoDB
-
-    res.json({
-      success: true,
-      message: "Successfully logined!",
-      accessToken,
-      user: {
-        id: findUsernameInDB._id,
-        username: findUsernameInDB.username,
-        email: findUsernameInDB.email,
-        dateOfBirth: findUsernameInDB.dateOfBirth,
-      },
-    });
-  } catch (err) {
-    console.error(err);
+  const findUsernameInDB = await UserModel.findOne({ username });
+  if (!findUsernameInDB) {
+    return res
+      .status(400)
+      .json({ success: false, message: "You didn't create an account yet!" });
   }
+
+  const validatePassword = await argon2.verify(
+    findUsernameInDB.password,
+    password
+  );
+  if (!validatePassword) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Incorrect password!" });
+  }
+  // console.log(findUsernameInDB);
+  const accessToken = jwt.sign(
+    { userId: findUsernameInDB._id },
+    process.env.JWT_SECRET
+  ); //._id được tạo sẵn trong mongoDB
+
+  res.json({
+    success: true,
+    message: "Successfully logined!",
+    accessToken,
+    user: {
+      id: findUsernameInDB._id,
+      username: findUsernameInDB.username,
+      email: findUsernameInDB.email,
+      dateOfBirth: findUsernameInDB.dateOfBirth,
+    },
+  });
 };
 
 exports.me = catchAsync(async (req, res) => {
