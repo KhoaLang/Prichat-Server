@@ -62,14 +62,18 @@ exports.getUserByNameOrEmail = catchAsync(async (req, res) => {
       ? []
       : await UserModel.find({
           username: { $regex: ".*" + name + ".*", $options: "i" },
-        }).exec();
+        })
+          .select("-avatar")
+          .exec();
 
   const userListByEmail =
     email.length === 0
       ? []
       : await UserModel.find({
           email: { $regex: ".*" + email + ".*", $options: "i" },
-        }).exec();
+        })
+          .select("-avatar")
+          .exec();
 
   const lastResult = [...userList, ...userListByEmail].filter(
     (item) => item._id.toString() !== userId

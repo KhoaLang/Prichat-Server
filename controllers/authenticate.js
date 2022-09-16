@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
 
   try {
     const findUsernameInDB = await UserModel.findOne({ username });
-    if (findUsernameInDB.username !== username) {
+    if (!findUsernameInDB) {
       return res
         .status(400)
         .json({ success: false, message: "You didn't create an account yet!" });
