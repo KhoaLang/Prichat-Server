@@ -14,14 +14,14 @@ const app = express();
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors());
 
 connectDB();
 
 app.use("/api", rootRouter);
 app.use(catchError);
 
-const server = app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on ${process.env.PORT}`);
 });
 

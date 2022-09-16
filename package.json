@@ -18,7 +18,11 @@
     "react-chat-engine": "^1.11.23",
     "socket.io": "^4.5.1"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "server": "nodemon index.js"
   }
 }
