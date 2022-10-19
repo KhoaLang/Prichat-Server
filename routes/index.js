@@ -4,6 +4,7 @@ const { router: roomRoute } = require("./roomRoute");
 const { router: userRoute } = require("./userRoute");
 const { router: messageRoute } = require("./messageRoute");
 const { router: testUserRoute } = require("./testUserRoute");
+const { router: userInfoRoute } = require("./userInfoRoute");
 
 const rootRouter = express.Router();
 
@@ -12,5 +13,6 @@ rootRouter.use("/rooms", roomRoute);
 rootRouter.use("/users", userRoute);
 rootRouter.use("/messages", messageRoute);
 rootRouter.use("/testUsers", testUserRoute);
+rootRouter.use("/userInfo", userInfoRoute);
 
 module.exports = { rootRouter };

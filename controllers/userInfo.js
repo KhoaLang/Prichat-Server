@@ -1,20 +1,20 @@
 const catchAsync = require("../middlewares/catchAsync");
-const TestUserSchema = require("../models/TestUserModel");
+const UserInfoModel = require("../models/UserInfoModel");
 const mongoose = require("mongoose");
 
 exports.createTestUser = catchAsync(async (req, res) => {
   const { faces, name, id } = req.body; //Dang String
 
-  console.log(faces);
+  // console.log(faces);
 
   //Xong xuôi rồi coi cái gì nữa
 
-  const stringFaces = JSON.stringify(faces);
+  // const stringFaces = JSON.stringify(faces);
 
-  await TestUserSchema.create({
+  await UserInfoModel.create({
     _id: parseInt(id), //tạo 1 custom object id dựa trên id người dùng nhập vào
     name,
-    faces: stringFaces,
+    faces,
   });
 
   res.json({
@@ -23,13 +23,13 @@ exports.createTestUser = catchAsync(async (req, res) => {
   });
 });
 
-exports.getUser = catchAsync(async (req, res) => {
-  // const { id } = req.params; //id là các mssv
-  const data = await TestUserSchema.find({});
+exports.getFacesById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  let raw_data = await UserInfoModel.findOne({ _id: id });
 
   res.json({
     success: true,
     message: "Retrieve faces success",
-    payload: data,
+    payload: raw_data,
   });
 });

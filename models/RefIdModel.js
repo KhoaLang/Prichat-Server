@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const TestUserSchema = new mongoose.Schema({
+const RefIdSchema = new mongoose.Schema({
   _id: Number,
   name: {
     type: String,
@@ -16,4 +16,4 @@ const TestUserSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("testUser", TestUserSchema);
+module.exports = mongoose.model("refId", RefIdSchema);

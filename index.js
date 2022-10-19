@@ -11,8 +11,8 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParser.json({ limit: "10mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
+// app.use(bodyParser.json({ limit: "50mb", extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
@@ -66,6 +66,13 @@ io.on("connection", (socket) => {
       content,
     });
     await newMess.save();
-    io.to(roomId).emit("receiveMessage", roomId);
+    io.in(roomId).emit("receiveMessage", roomId);
   });
+
+  socket.on("typing", (roomAndid) =>
+    socket.broadcast.to(roomAndid.room).emit("typing", roomAndid.id)
+  );
+  socket.on("stop-typing", (roomAndid) =>
+    io.in(roomAndid.room).emit("stop-typing", roomAndid.id)
+  );
 });
