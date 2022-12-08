@@ -80,7 +80,7 @@ exports.newMessage = catchAsync(async (req, res) => {
 exports.eraseMessage = catchAsync(async (req, res) => {
   const { id } = req.params;
   // console.log(id);
-  const message = await MessageModel.findByIdAndDelete(id);
+  await MessageModel.findByIdAndDelete(id);
   res.json({
     success: true,
     message: "Delete messages success",

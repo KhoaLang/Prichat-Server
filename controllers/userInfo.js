@@ -1,20 +1,12 @@
 const catchAsync = require("../middlewares/catchAsync");
 const UserInfoModel = require("../models/UserInfoModel");
-const mongoose = require("mongoose");
 
-exports.createTestUser = catchAsync(async (req, res) => {
-  const { faces, name, id } = req.body; //Dang String
-
-  // console.log(faces);
-
-  //Xong xuôi rồi coi cái gì nữa
-
-  // const stringFaces = JSON.stringify(faces);
+exports.createUser = catchAsync(async (req, res) => {
+  const { name, id } = req.body;
 
   await UserInfoModel.create({
-    _id: parseInt(id), //tạo 1 custom object id dựa trên id người dùng nhập vào
+    _id: id, //tạo 1 custom object id dựa trên id người dùng nhập vào
     name,
-    faces,
   });
 
   res.json({
@@ -32,4 +24,22 @@ exports.getFacesById = catchAsync(async (req, res) => {
     message: "Retrieve faces success",
     payload: raw_data,
   });
+});
+
+exports.updateUserTime = catchAsync(async (req, res) => {
+  const { id, enterTime, leaveTime } = req.body;
+
+  if (enterTime) {
+    await UserInfoModel.updateOne(
+      { _id: id },
+      { $push: { enterTime: enterTime } }
+    );
+  } else {
+    await UserInfoModel.updateOne(
+      { _id: id },
+      { $push: { leaveTime: leaveTime } }
+    );
+  }
+
+  res.json({ success: true, message: "Update user success" });
 });

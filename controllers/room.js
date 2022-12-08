@@ -74,6 +74,7 @@ exports.createRoom = catchAsync(async (req, res) => {
     roomname,
     avatar,
     members: friendListInUserObject,
+    seened: [],
   });
 
   // console.log(members);
@@ -167,5 +168,63 @@ exports.addMember = catchAsync(async (req, res) => {
   res.json({
     success: true,
     message: "Add members to room successfully",
+  });
+});
+
+exports.updateSeendUser = catchAsync(async (req, res) => {
+  const { roomId } = req.params;
+  const { id } = req.body;
+
+  await RoomModel.updateOne(
+    { _id: roomId },
+    { $push: { seened: new mongoose.Types.ObjectId(id) } }
+  );
+
+  // await RoomModel.findByIdAndUpdate(roomId, {
+  //   seened: objectIdArray,
+  // });
+
+  res.json({
+    success: true,
+    message: "Update messages success",
+  });
+});
+
+exports.removeUnseenUser = catchAsync(async (req, res) => {
+  const { usrId } = req.params;
+
+  console.log("Gello from the inside");
+
+  const user = await UserModel.findById(usrId);
+  const roomIds = [...user.roomIds];
+
+  console.log(roomIds);
+
+  roomIds.forEach(async (el) => {
+    const temp = await RoomModel.findById(el.toString());
+
+    if (temp && temp?.seened.length > 0) {
+      temp.seened.forEach(async (el2) => {
+        if (el2.toString() === usrId) {
+          await RoomModel.updateOne(
+            {
+              _id: new mongoose.Types.ObjectId(el),
+            },
+            {
+              $set: {
+                seened: [
+                  ...temp.seened.filter((item) => item.toString() !== usrId),
+                ],
+              },
+            }
+          );
+        }
+      });
+    }
+  });
+
+  res.json({
+    success: true,
+    message: "Remove users out of seened room successfully",
   });
 });

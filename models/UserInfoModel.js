@@ -6,10 +6,12 @@ const UserInfoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  faces: {
-    type: String,
-    required: true,
-  },
+  enterTime: [
+    {
+      type: Date,
+    },
+  ],
+  leaveTime: [{ type: Date }],
   createdAt: {
     type: Date,
     default: Date.now,

@@ -42,7 +42,6 @@ exports.downloadUserAvatar = catchAsync(async (req, res) => {
   if (!user) {
     throw new ApiError("User is not valid");
   }
-
   res.json({
     success: true,
     message: "Get user avatar success",

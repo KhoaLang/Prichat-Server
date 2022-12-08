@@ -15,6 +15,7 @@ const MessageSchema = new mongoose.Schema({
       type: Buffer,
     },
   ],
+
   room: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "room",

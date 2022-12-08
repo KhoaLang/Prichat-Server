@@ -16,6 +16,12 @@ const RoomSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  seened: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
