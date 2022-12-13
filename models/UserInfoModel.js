@@ -1,21 +1,31 @@
 const mongoose = require("mongoose");
 
-const UserInfoSchema = new mongoose.Schema({
-  _id: Number,
-  name: {
-    type: String,
-    required: true,
-  },
-  enterTime: [
-    {
-      type: Date,
+const UserInfoSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: Number,
+      required: true,
     },
-  ],
-  leaveTime: [{ type: Date }],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    name: {
+      type: String,
+      required: true,
+    },
+    enterTime: [
+      {
+        type: String,
+      },
+    ],
+    leaveTime: [{ type: String }],
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now,
+    // },
+    // updatedAt: {
+    //   type: Date,
+    //   default: Date.now,
+    // },
   },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("userInfo", UserInfoSchema);
