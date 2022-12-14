@@ -27,49 +27,49 @@ exports.createUser = catchAsync(async (req, res) => {
 //   });
 // });
 
-exports.updateUserEnterTime = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const { time } = req.body;
+// exports.updateUserEnterTime = catchAsync(async (req, res) => {
+//   const { id } = req.params;
+//   const { time } = req.body;
 
-  // console.log("id là: ", id);
-  // console.log("Thời gian vô là: ", time);
+//   // console.log("id là: ", id);
+//   // console.log("Thời gian vô là: ", time);
 
-  // const user = await UserInfoModel.findById(id);
-  // if (user.enterTime.length > user.leaveTime.length) {
-  //   await UserInfoModel.updateOne({ _id: id }, { $push: { leaveTime: time } });
-  // } else {
-  await UserInfoModel.updateOne({ _id: id }, { $push: { enterTime: time } });
-  // }
-  res.json({ success: true, message: "Update user success" });
-});
+//   // const user = await UserInfoModel.findById(id);
+//   // if (user.enterTime.length > user.leaveTime.length) {
+//   //   await UserInfoModel.updateOne({ _id: id }, { $push: { leaveTime: time } });
+//   // } else {
+//   await UserInfoModel.updateOne({ _id: id }, { $push: { enterTime: time } });
+//   // }
+//   res.json({ success: true, message: "Update user success" });
+// });
 
-exports.updateUserLeaveTime = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const { time } = req.body;
+// exports.updateUserLeaveTime = catchAsync(async (req, res) => {
+//   const { id } = req.params;
+//   const { time } = req.body;
 
-  // console.log("id là: ", id);
-  // console.log("Thời gian vô là: ", time);
+//   // console.log("id là: ", id);
+//   // console.log("Thời gian vô là: ", time);
 
-  // const user = await UserInfoModel.findById(id);
-  // if (user.enterTime.length > user.leaveTime.length) {
-  await UserInfoModel.updateOne({ _id: id }, { $push: { leaveTime: time } });
-  // } else {
-  // await UserInfoModel.updateOne({ _id: id }, { $push: { enterTime: time } });
-  // }
-  res.json({ success: true, message: "Update user success" });
-});
+//   // const user = await UserInfoModel.findById(id);
+//   // if (user.enterTime.length > user.leaveTime.length) {
+//   await UserInfoModel.updateOne({ _id: id }, { $push: { leaveTime: time } });
+//   // } else {
+//   // await UserInfoModel.updateOne({ _id: id }, { $push: { enterTime: time } });
+//   // }
+//   res.json({ success: true, message: "Update user success" });
+// });
 
-exports.getUserInfoById = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const { onlyBasic } = req.body;
+// exports.getUserInfoById = catchAsync(async (req, res) => {
+//   const { id } = req.params;
+//   const { onlyBasic } = req.body;
 
-  const user = onlyBasic
-    ? await UserInfoModel.findById(id).select("-enterTime -leaveTime")
-    : await UserInfoModel.findById(id);
+//   const user = onlyBasic
+//     ? await UserInfoModel.findById(id).select("-enterTime -leaveTime")
+//     : await UserInfoModel.findById(id);
 
-  res.json({
-    success: true,
-    message: "Retrieve data success",
-    payload: user,
-  });
-});
+//   res.json({
+//     success: true,
+//     message: "Retrieve data success",
+//     payload: user,
+//   });
+// });

@@ -10,20 +10,6 @@ const UserInfoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    enterTime: [
-      {
-        type: String,
-      },
-    ],
-    leaveTime: [{ type: String }],
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now,
-    // },
-    // updatedAt: {
-    //   type: Date,
-    //   default: Date.now,
-    // },
   },
   { timestamps: true }
 );
