@@ -1,10 +1,17 @@
 const catchAsync = require("../middlewares/catchAsync");
 const TimeStampModel = require("../models/TimeStampModel");
 const mongoose = require("mongoose");
+const UserInfoModel = require("../models/UserInfoModel");
 
 exports.createTimestamp = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { enterTime, leaveTime } = req.body;
+
+  const user = await UserInfoModel.findById(id);
+  console.log("Create timestamp");
+
+  const io = req.app.locals.io;
+  io.emit("create-timestamp", { name: user.name });
 
   enterTime
     ? await TimeStampModel.create({
@@ -21,5 +28,14 @@ exports.createTimestamp = catchAsync(async (req, res) => {
   res.json({
     success: "true",
     message: "Create timestamp success",
+  });
+});
+
+exports.getLatestTimestamp = catchAsync(async (req, res) => {
+  let data = await TimeStampModel.findOne({}, {}, { sort: { created_at: -1 } });
+  res.json({
+    success: "true",
+    message: "Retrieve timestamp success",
+    payload: data,
   });
 });

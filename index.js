@@ -30,7 +30,7 @@ const server = app.listen(3002, () => {
 const io = require("socket.io")(server, {
   allowEIO3: true,
   cors: {
-    origin: true,
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -44,7 +44,7 @@ io.use(async (socket, next) => {
     console.log(err);
   }
 });
-
+app.locals.io = io;
 io.on("connection", (socket) => {
   console.log("Connected: " + socket.id);
   socket.on("joinRoom", async (data) => {
