@@ -10,9 +10,6 @@ exports.createTimestamp = catchAsync(async (req, res) => {
   const user = await UserInfoModel.findById(id);
   console.log("Create timestamp");
 
-  const io = req.app.locals.io;
-  io.emit("create-timestamp", { name: user.name });
-
   enterTime
     ? await TimeStampModel.create({
         user: id,
